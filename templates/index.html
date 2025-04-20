@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">Welcome to Facebook Ads Automation</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead">This tool helps you automate the creation of Facebook ad campaigns, including targeting and ad generation.</p>
+                
+                <div class="alert alert-info">
+                    <h5>What You Can Do:</h5>
+                    <ul>
+                        <li>Create a campaign with a specified budget</li>
+                        <li>Set up an ad set with targeting parameters</li>
+                        <li>Create an ad creative with text</li>
+                        <li>Generate an ad</li>
+                    </ul>
+                    <p class="mb-0"><strong>Note:</strong> All components are created in PAUSED state to prevent accidental spending.</p>
+                </div>
+                
+                <h3 class="mt-4">Getting Started</h3>
+                <p>To use this tool, you need to authenticate with the Facebook Ads API. Please provide your credentials below:</p>
+                
+                <form action="{{ url_for('authenticate') }}" method="post" class="mt-3">
+                    <div class="mb-3">
+                        <label for="access_token" class="form-label">Facebook Access Token</label>
+                        <input type="text" class="form-control" id="access_token" name="access_token" placeholder="Enter your access token with ads_management permissions">
+                        <div class="form-text">You can get this from <a href="https://developers.facebook.com" target="_blank">Facebook for Developers</a>.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="ad_account_id" class="form-label">Ad Account ID</label>
+                        <input type="text" class="form-control" id="ad_account_id" name="ad_account_id" placeholder="e.g., act_123456789">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Authenticate</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header bg-secondary text-white">
+                <h4 class="mb-0">Prerequisites</h4>
+            </div>
+            <div class="card-body">
+                <p>Before you begin, make sure you have:</p>
+                <ul>
+                    <li>A Facebook Developer Account</li>
+                    <li>An app registered at <a href="https://developers.facebook.com" target="_blank">Facebook for Developers</a></li>
+                    <li>Access token with <code>ads_management</code> permissions</li>
+                    <li>Ad Account ID</li>
+                    <li>Facebook Page ID (for the ad creative)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
