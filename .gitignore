@@ -1,0 +1,36 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Environment variables
+.env
+
+# Replit specific files
+.replit
+replit.nix
+.upm/
+.config/
+.cache/
+
+# Flask related
+instance/
+.webassets-cache
+
+# Local development
+.DS_Store
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
