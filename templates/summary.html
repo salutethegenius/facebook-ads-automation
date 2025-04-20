@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h2 class="mb-0">Campaign Summary</h2>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <strong>Important:</strong> All components are created in PAUSED state to prevent accidental spending.
+                    To activate your campaign, please log in to Facebook Ads Manager and review everything before changing the status.
+                </div>
+                
+                <h3 class="mt-4">Your Facebook Ads Campaign Components</h3>
+                
+                <table class="table table-bordered">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Component</th>
+                            <th>ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Campaign</strong></td>
+                            <td>{{ campaign_id }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ad Set</strong></td>
+                            <td>{{ ad_set_id }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ad Creative</strong></td>
+                            <td>{{ creative_id }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ad</strong></td>
+                            <td>{{ ad_id }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="mt-4">
+                    <h4>Next Steps</h4>
+                    <ol>
+                        <li>Log in to <a href="https://adsmanager.facebook.com" target="_blank">Facebook Ads Manager</a>.</li>
+                        <li>Navigate to your campaign (using the ID above).</li>
+                        <li>Review all settings and make any necessary adjustments.</li>
+                        <li>If everything looks good, you can change the status from PAUSED to ACTIVE.</li>
+                    </ol>
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-primary me-md-2">Back to Dashboard</a>
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary">Start New Campaign</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
