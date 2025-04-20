@@ -1,0 +1,190 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="alert alert-success">
+            <h4 class="alert-heading">You're authenticated!</h4>
+            <p>Now you can create your Facebook ad campaign components using the forms below.</p>
+            <hr>
+            <p class="mb-0">Follow the steps in order: 1) Create Campaign, 2) Create Ad Set, 3) Create Ad Creative, 4) Create Ad</p>
+        </div>
+    </div>
+
+    <!-- Step 1: Create Campaign -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Step 1: Create Campaign</h4>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('create_campaign_route') }}" method="post">
+                    <div class="mb-3">
+                        <label for="campaign_name" class="form-label">Campaign Name</label>
+                        <input type="text" class="form-control" id="campaign_name" name="campaign_name" value="Fitness Campaign">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="objective" class="form-label">Campaign Objective</label>
+                        <select class="form-select" id="objective" name="objective">
+                            <option value="REACH" selected>Reach</option>
+                            <option value="AWARENESS">Brand Awareness</option>
+                            <option value="TRAFFIC">Traffic</option>
+                            <option value="CONVERSIONS">Conversions</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="daily_budget" class="form-label">Daily Budget (USD)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="daily_budget" name="daily_budget" value="50" min="5" step="1">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Create Campaign</button>
+                    {% if session.get('campaign_id') %}
+                        <div class="alert alert-success mt-3">
+                            Campaign created! ID: {{ session.get('campaign_id') }}
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2: Create Ad Set -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Step 2: Create Ad Set</h4>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('create_ad_set_route') }}" method="post">
+                    <div class="mb-3">
+                        <label for="ad_set_name" class="form-label">Ad Set Name</label>
+                        <input type="text" class="form-control" id="ad_set_name" name="ad_set_name" value="Fitness Ad Set">
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="age_min" class="form-label">Minimum Age</label>
+                            <input type="number" class="form-control" id="age_min" name="age_min" value="25" min="13" max="65">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="age_max" class="form-label">Maximum Age</label>
+                            <input type="number" class="form-control" id="age_max" name="age_max" value="35" min="13" max="65">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="countries" class="form-label">Countries (comma-separated)</label>
+                        <input type="text" class="form-control" id="countries" name="countries" value="US">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select class="form-select" id="gender" name="gender">
+                            <option value="1">Male</option>
+                            <option value="2" selected>Female</option>
+                            <option value="0">All</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" {% if not session.get('campaign_id') %}disabled{% endif %}>
+                        Create Ad Set
+                    </button>
+                    {% if not session.get('campaign_id') %}
+                        <div class="form-text text-danger">You need to create a campaign first</div>
+                    {% endif %}
+                    
+                    {% if session.get('ad_set_id') %}
+                        <div class="alert alert-success mt-3">
+                            Ad Set created! ID: {{ session.get('ad_set_id') }}
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3: Create Ad Creative -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Step 3: Create Ad Creative</h4>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('create_ad_creative_route') }}" method="post">
+                    <div class="mb-3">
+                        <label for="page_id" class="form-label">Facebook Page ID</label>
+                        <input type="text" class="form-control" id="page_id" name="page_id" placeholder="Enter your Facebook Page ID" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Ad Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="3">Get Fit Now!</textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="link" class="form-label">Link URL</label>
+                        <input type="url" class="form-control" id="link" name="link" value="https://example.com">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Create Ad Creative</button>
+                    
+                    {% if session.get('creative_id') %}
+                        <div class="alert alert-success mt-3">
+                            Ad Creative created! ID: {{ session.get('creative_id') }}
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 4: Create Ad -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Step 4: Create Ad</h4>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('create_ad_route') }}" method="post">
+                    <div class="mb-3">
+                        <label for="ad_name" class="form-label">Ad Name</label>
+                        <input type="text" class="form-control" id="ad_name" name="ad_name" value="Fitness Ad">
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <strong>Note:</strong> This will use the ad set and creative you created in steps 2 and 3.
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" 
+                        {% if not session.get('ad_set_id') or not session.get('creative_id') %}disabled{% endif %}>
+                        Create Ad
+                    </button>
+                    
+                    {% if not session.get('ad_set_id') or not session.get('creative_id') %}
+                        <div class="form-text text-danger">You need to create an ad set and ad creative first</div>
+                    {% endif %}
+                    
+                    {% if session.get('ad_id') %}
+                        <div class="alert alert-success mt-3">
+                            Ad created! ID: {{ session.get('ad_id') }}
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Button -->
+    <div class="col-md-12 text-center mb-5">
+        <a href="{{ url_for('summary') }}" class="btn btn-lg btn-success" 
+            {% if not session.get('ad_id') %}disabled{% endif %}>
+            View Campaign Summary
+        </a>
+    </div>
+</div>
+{% endblock %}
